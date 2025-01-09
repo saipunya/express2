@@ -23,7 +23,7 @@
             <!-- place navbar here -->
         </header>
         <main>
-            <p>ยินดีต้อนรับสู่นายเมธดอทคอม2</p>
+            <p>ยินดีต้อนรับสู่นายเมธดอทคอม23</p>
         </main>
         <footer>
             <!-- place footer here -->
