@@ -5,8 +5,9 @@ const path = require('path')
 // app.use(express.static('public'))
 app.set('views','./views')
 app.set('view engine', 'ejs')
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
 app.get('/',(req, res) => {
-    res.send('welcome to Naimet website!')
+    res.render('index')
 
   })
   app.get('/person',(req, res) => {
