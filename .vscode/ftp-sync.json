@@ -1,12 +1,12 @@
 {
-    "remotePath": "./httpdocs/main",
+    "remotePath": "./httpdocs/main/",
     "host": "103.30.127.74",
     "username": "naimet.com",
     "password": "sumetchoorat4631022",
     "port": 21,
     "secure": false,
     "protocol": "ftp",
-    "uploadOnSave": false,
+    "uploadOnSave": true,
     "passive": false,
     "debug": false,
     "privateKeyPath": null,
@@ -22,6 +22,6 @@
         "extensionsToInclude": [
             ""
         ],
-        "path": ""
+        "path": "./httpdocs/main/"
     }
 }

@@ -7,7 +7,9 @@ app.set('views','./views')
 app.set('view engine', 'ejs')
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'))
 app.get('/',(req, res) => {
-    res.render('index')
+    res.send('index',{
+      title : 'Welcome to website'
+    })
 
   })
   app.get('/person',(req, res) => {
