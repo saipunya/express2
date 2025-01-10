@@ -3,6 +3,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const path = require('path')
 const ejs = require('ejs')
+const mysql = require('mysql2/promise');
+
 
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -20,6 +22,19 @@ app.use(bodyParser.json())
 app.get('/',(req, res) => {
     res.render('index')
 
+  })
+  app.get('/user',(req, res) => {
+        mysql.createConnection({
+        host: 'localhost',
+        user: 'naimet_user',
+        database: 'naimet_db',
+        password: 'sumet4631022'
+    }).then((conn)=>{
+        conn.query('SELECT * FROM tbl_user')
+        .then((result)=>{
+          res.json(result[0])
+        })
+    })
   })
   app.get('/person',(req, res) => {
     res.render('person', {
