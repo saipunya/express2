@@ -6,6 +6,7 @@ const ejs = require('ejs')
 const mysql = require('mysql2/promise')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const axios = require('axios')
 
 
 // app.use(express.static('public'))
@@ -34,9 +35,16 @@ app.get('/',(req, res) => {
         })
     })
   })
-  app.get('/user',(req, res) => {
-   
+  app.get('/todos',(req, res) => {
+
+const callApi = async () => {
+  await axios.get("https://jsonplaceholder.typicode.com/todos")
+  .then((result) => {
+    res.json(result.data);
   })
+}
+callApi();
+})
   app.get('/person',(req, res) => {
     res.render('person', {
        name :{
