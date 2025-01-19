@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 5000
 const path = require('path')
 const ejs = require('ejs')
-const mysql = require('mysql2/promise')
+const mysql = require('mysql')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const axios = require('axios')
@@ -130,8 +130,8 @@ app.get('/dashboard', (req, res) => {
 
 
 app.get('/logout', (req, res) => {
-  req.session.destroy((error) => {
-      if (error) throw error;
+  req.session.destroy((err) => {
+      if (err) throw err;
       res.redirect('/');
   });
 });
