@@ -22,19 +22,19 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist')
 
 app.use(express.json())
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
-  secret: 'secret',
+  secret: 'choorat',
   resave: false,
   saveUninitialized: false
 }))
 app.use(flash())
 
-app.get('/',(req, res) => {
-    res.render('index')
+// app.get('/',(req, res) => {
+//     res.render('index')
 
-  })
+//   })
   // app.get('/users',(req, res) => {
   //       mysql.createConnection({
   //       host: 'localhost',
@@ -60,7 +60,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password , fullname } = req.body;
 
   // Check if the user already exists
   db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
@@ -75,7 +75,7 @@ app.post('/register', async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       db.query(
           'INSERT INTO tbl_user (use_username, use_password,use_fullname) VALUES (?, ? , ?)',
-          [username, hashedPassword],
+          [username, hashedPassword,fullname],
           (err, result) => {
               if (err) throw err;
               res.redirect('/');
@@ -85,7 +85,7 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { username, password} = req.body;
 
   // Check user in database
   db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
@@ -96,17 +96,25 @@ app.post('/login', (req, res) => {
           return res.redirect('/');
       }
 
+
+      // const isMatch = await bcrypt.compare(password, user.password);
+
       const user = result[0];
-      const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.use_password);
 
-      if (!isMatch) {
-          req.flash('error', 'Invalid username or password.');
-          return res.redirect('/');
-      }
+        if (!isMatch) {
+            req.flash('error', 'Invalid username or password.');
+            return res.redirect('/');
+        }
 
-      // Save user session
-      req.session.user = user;
-      res.redirect('/dashboard');
+        // Save user session
+        req.session.user = user;
+        console.log(user);
+        res.redirect('/dashboard');
+
+  
+
+  
   });
 });
 
@@ -114,9 +122,12 @@ app.get('/dashboard', (req, res) => {
   if (!req.session.user) {
       req.flash('error', 'Please log in first.');
       return res.redirect('/');
+  }else{
+    res.render('dashboard', { user: req.session.user });
   }
-  res.render('dashboard', { user: req.session.user });
+
 });
+
 
 app.get('/logout', (req, res) => {
   req.session.destroy((error) => {
