@@ -10,6 +10,7 @@ const axios = require('axios')
 const db = require('./database')
 const flash = require('connect-flash')
 const session = require('express-session')
+const bcrypt = require('bcryptjs')
 
 
 
@@ -62,7 +63,7 @@ app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   // Check if the user already exists
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
+  db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
       if (err) throw err;
 
       if (result.length > 0) {
@@ -73,7 +74,7 @@ app.post('/register', async (req, res) => {
       // Hash password and save user
       const hashedPassword = await bcrypt.hash(password, 10);
       db.query(
-          'INSERT INTO users (username, password) VALUES (?, ?)',
+          'INSERT INTO tbl_user (use_username, use_password,use_fullname) VALUES (?, ? , ?)',
           [username, hashedPassword],
           (err, result) => {
               if (err) throw err;
@@ -87,7 +88,7 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   // Check user in database
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, result) => {
+  db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
       if (err) throw err;
 
       if (result.length === 0) {
@@ -118,8 +119,8 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-      if (err) throw err;
+  req.session.destroy((error) => {
+      if (error) throw error;
       res.redirect('/');
   });
 });
