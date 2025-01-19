@@ -1,9 +1,9 @@
 const express = require('express')
 const app = express();
-const port = process.env.PORT || 5000
+const port =  3000
 const path = require('path')
 const ejs = require('ejs')
-const mysql = require('mysql')
+const mysql = require('mysql2/promise')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const axios = require('axios')
@@ -163,5 +163,5 @@ app.get('/logout', (req, res) => {
 //     })
 // })
 app.listen(port, ()=>{
-    console.log('object listening on port 5000');
+    console.log('object listening on port 3000');
 })
