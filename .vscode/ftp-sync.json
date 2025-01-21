@@ -1,7 +1,7 @@
 {
     "remotePath": "./httpdocs/express/",
     "host": "103.30.127.74",
-    "username": "naimet.com",
+    "username": "naimet",
     "password": "sumetchoorat4631022",
     "port": 21,
     "secure": false,

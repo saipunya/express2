@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express();
+const mysql = require('mysql2/promise')
 const port =  3000
 const path = require('path')
 const ejs = require('ejs')
-const mysql = require('mysql2/promise')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const axios = require('axios')
-const db = require('./database')
+// const connection = require('./db')
 const flash = require('connect-flash')
 const session = require('express-session')
 const bcrypt = require('bcryptjs')
@@ -31,23 +31,43 @@ app.use(session({
 }))
 app.use(flash())
 
+
+
+// const initMysql = async () => {
+//     connection = await mysql.createConnection({
+//         host: 'localhost',
+//         user: 'naimet_user',
+//         database: 'naimet_db',
+//         password : 'sumetchoorat4631022',
+//         port: 3306
+
+//     })
+// }
+
 // app.get('/',(req, res) => {
 //     res.render('index')
 
 //   })
-  // app.get('/users',(req, res) => {
-  //       mysql.createConnection({
-  //       host: 'localhost',
-  //       user: 'naimet_user',
-  //       database: 'naimet_db',
-  //       password: 'sumet4631022',
-  //   }).then((conn)=>{
-  //       conn.query('SELECT * FROM tbl_user')
-  //       .then((result)=>{
-  //         res.json(result[0])
-  //       })
-  //   })
-  // })
+
+
+  app.get('/users', async (req, res) => {
+    try{
+      const conn =  await mysql.createConnection({
+        host: 'localhost',
+        user: 'naimet_user',
+        database: 'naimet_db',
+        password: 'sumetchoorat4631022',
+    })
+        const result = await conn.query('SELECT * FROM tbl_user')
+        res.json(result[0])
+    }
+    catch(err){
+      console.error('Error user: ' + err.message)
+      res.status(500).json({error: 'Error user: ' + err.message})
+    }
+      
+    })
+ 
 
 
 // Routes
@@ -63,7 +83,7 @@ app.post('/register', async (req, res) => {
   const { username, password , fullname } = req.body;
 
   // Check if the user already exists
-  db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
+  connection.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
       if (err) throw err;
 
       if (result.length > 0) {
@@ -73,7 +93,11 @@ app.post('/register', async (req, res) => {
 
       // Hash password and save user
       const hashedPassword = await bcrypt.hash(password, 10);
-      db.query(
+      const mysql = require('mysql2');
+
+
+
+      connection.query(
           'INSERT INTO tbl_user (use_username, use_password,use_fullname) VALUES (?, ? , ?)',
           [username, hashedPassword,fullname],
           (err, result) => {
@@ -88,7 +112,7 @@ app.post('/login', (req, res) => {
   const { username, password} = req.body;
 
   // Check user in database
-  db.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
+  connection.query('SELECT * FROM tbl_user WHERE use_username = ?', [username], async (err, result) => {
       if (err) throw err;
 
       if (result.length === 0) {
@@ -162,6 +186,7 @@ app.get('/logout', (req, res) => {
 //        },children : ['Micky','Mint']
 //     })
 // })
-app.listen(port, ()=>{
+app.listen(port,(req,res)=>{
+  
     console.log('object listening on port 3000');
 })
