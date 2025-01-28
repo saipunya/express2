@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express();
-const mysql = require('mysql2/promise')
+const mysql2 = require('mysql2/promise')
 const port =  3000
+const mysql = require('mysql')
 const path = require('path')
 const ejs = require('ejs')
 const cors = require('cors')
@@ -14,7 +15,7 @@ const bcrypt = require('bcryptjs')
 
 
 
-// app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'));
 
 app.set('views','./views')
 app.set('view engine', 'ejs')
@@ -33,48 +34,42 @@ app.use(flash())
 
 
 
-// const initMysql = async () => {
-//     connection = await mysql.createConnection({
-//         host: 'localhost',
-//         user: 'naimet_user',
-//         database: 'naimet_db',
-//         password : 'sumetchoorat4631022',
-//         port: 3306
-
-//     })
-// }
-
-// app.get('/',(req, res) => {
-//     res.render('index')
-
-//   })
 
 
-  app.get('/users', async (req, res) => {
-    try{
-      const conn =  await mysql.createConnection({
-        host: 'localhost',
-        user: 'naimet_user',
-        database: 'naimet_db',
-        password: 'sumetchoorat4631022',
-    })
-        const result = await conn.query('SELECT * FROM tbl_user')
-        res.json(result[0])
-    }
-    catch(err){
-      console.error('Error user: ' + err.message)
-      res.status(500).json({error: 'Error user: ' + err.message})
-    }
+  // app.get('/users', async (req, res) => {
+  //   try{
+  //     const conn =  await mysql.createConnection({
+  //       host: 'localhost',
+  //       user: 'naimet_user',
+  //       database: 'naimet_db',
+  //       password: 'sumetchoorat4631022',
+  //   })
+  //       const result = await conn.query('SELECT * FROM tbl_user')
+  //       res.json(result[0])
+  //   }
+  //   catch(err){
+  //     console.error('Error user: ' + err.message)
+  //     res.status(500).json({error: 'Error user: ' + err.message})
+  //   }
       
-    })
+  //   })
  
-
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'naimet_user',
+  password: 'sumetchoorat4631022',
+  database: 'naimet_db',
+})
 
 // Routes
+
+
 app.get('/', (req, res) => {
+    res.render('index',{ message: req.flash('error') });
+  });
+app.get('/login', (req, res) => {
   res.render('login', { message: req.flash('error') });
 });
-
 app.get('/register', (req, res) => {
   res.render('register', { message: req.flash('error') });
 });
@@ -93,7 +88,7 @@ app.post('/register', async (req, res) => {
 
       // Hash password and save user
       const hashedPassword = await bcrypt.hash(password, 10);
-      const mysql = require('mysql2');
+
 
 
 
@@ -133,7 +128,8 @@ app.post('/login', (req, res) => {
 
         // Save user session
         req.session.user = user;
-        console.log(user);
+        req.session.id = user.use_id;
+ 
         res.redirect('/dashboard');
 
   
@@ -147,7 +143,9 @@ app.get('/dashboard', (req, res) => {
       req.flash('error', 'Please log in first.');
       return res.redirect('/');
   }else{
+ 
     res.render('dashboard', { user: req.session.user });
+    console.log(req.session.id);
   }
 
 });
@@ -160,33 +158,6 @@ app.get('/logout', (req, res) => {
   });
 });
 
-
-
-
-
-//   app.get('/todos',(req, res) => {
-
-// const callApi = async () => {
-//   await axios.get("https://jsonplaceholder.typicode.com/todos")
-//   .then((result) => {
-//     res.json(result.data);
-//   })
-// }
-// callApi();
-// })
-//   app.get('/person',(req, res) => {
-//     res.render('person', {
-//        name :{
-//         firstName : 'sumet',
-//         lastName : 'choorat'
-//        },
-//        address : {
-//         city : 'chaiyaphum',
-//         country : 'bangkok'
-//        },children : ['Micky','Mint']
-//     })
-// })
-app.listen(port,(req,res)=>{
-  
+app.listen(port,()=>{
     console.log('object listening on port 3000');
 })
