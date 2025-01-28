@@ -1,47 +1,27 @@
 
-const dotenv = require('dotenv').config();
+
 const mysql = require('mysql2');
-// const db = mysql.createPool({
-//     host: 'localhost',
-//     user: 'naimet_user',
-//     password: 'sumetchoorat4631022',
-//     database: 'naimet_db',
-//     waitForConnections: true,
-//     connectionLimit: 10,
-//     queueLimit: 0,
-//   });
-  
-//   db.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('Connection error:', err.message);
-//       return;
-//     }
-//     console.log('Connected to the database.');
-//     connection.release();
-//   });
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'sumet4631022',
+    database: 'naimet'
 
-
-const db = mysql.createConnection({
+    // *** -----------------hosting online----------------------------------- ***
     // host : 'localhost',
     // user : 'naimet_user',
     // password : 'sumetchoorat4631022',
-    // database : 'naimet_db',
-
-
-        host: process.env.MYSQL_HOST,
-        user: process.env.MYSQL_USER,
-        database: process.env.MYSQL_DATABASE,
-        password: process.env.MYSQL_PASSWORD,
+    // database : 'naimet_db'
     })
     
 
-        db.connect((err) => {
+        connection.connect((err) => {
             if(err) {
                 console.log('Error connecting to Db', err.message);
                 return;
             }
-            console.log('Connection established');
+            console.log('Connection Completely Connected');
         });
-    module.exports = db;
+    module.exports = connection;
 
 
