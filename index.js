@@ -1,29 +1,24 @@
 const express = require('express')
 const app = express();
-const mysql2 = require('mysql2/promise')
-const port =  3000
-const mysql = require('mysql')
-const path = require('path')
-const ejs = require('ejs')
+const port = 3000
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const axios = require('axios')
-const connection = require('./database')
-const flash = require('connect-flash')
-const session = require('express-session')
 const bcrypt = require('bcryptjs')
+const session = require('express-session')
 const { readdirSync } = require('fs')
 const loginRoutes = require('./Routes/loginRoute')
 const registerRoutes = require('./Routes/registerRoute')
 const dashboardRoutes = require('./Routes/dashboardRoute')
 const logoutRoutes = require('./Routes/logoutRoute')
-
+const homeRoutes = require('./Routes/homeRoute')
+const flash = require('connect-flash')
 
 readdirSync('./Routes').map((r)=> app.use('/',require('./Routes/' + r)))
 app.use('/',loginRoutes)
 app.use('/',registerRoutes)
 app.use('/',dashboardRoutes)
 app.use('/',logoutRoutes)
+app.use('/',homeRoutes)
 
 
 app.use(express.static(__dirname + '/public'));
@@ -45,17 +40,9 @@ app.use(flash())
 
 
 
-  
 
 
-app.get('/', (req, res) => {
-    res.render('index',
-      { 
-        message: req.flash('error'),
-         user: req.session.user || ''
-       }
-    );
-  });
+
 
 
 
