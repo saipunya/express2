@@ -5,61 +5,62 @@
         <% if(user){ %>
         <span>สวัสดีคุณ : <%= user.use_username %>!</span>
         <% } %>
+        <% var host = 'https://www.สหกรณ์จังหวัดชัยภูมิ.com';  %>
         <h4>คู่มือกรมส่งเสริมสหกรณ์</h4>
         <div class="row row-cols-lg-4  text-center">
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/jodtabiancoop.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j9.png"
+                        <a href="<%= host %>/site/member/img/books/jodtabiancoop.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j9.png"
                                         alt="" class="img-fluid "></a>
 
                 </div>
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/jadtunggroup.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j8.png"
+                        <a href="<%= host %>/site/member/img/books/jadtunggroup.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j8.png"
                                         alt="" class="img-fluid"></a>
 
                 </div>
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/kumkab.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j6.png"
+                        <a href="<%= host %>/site/member/img/books/kumkab.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j6.png"
                                         alt="" class="img-fluid"></a>
 
                 </div>
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/tuadkan1.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j3.png"
+                        <a href="<%= host %>/site/member/img/books/tuadkan1.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j3.png"
                                         alt="" class="img-fluid"></a>
 
                 </div>
         </div>
         <div class="row row-cols-lg-4  text-center">
                 <div class="col">
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/chaiumnart.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j4.png"
+                        <a href="<%= host %>/site/member/img/books/chaiumnart.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j4.png"
                                         alt="" class="img-fluid"></a>
                 </div>
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/khobangkub.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j1.png"
-                                        alt="" class="img-fluid"></a>
-
-                </div>
-                <div class="col">
-
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/lerk.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j2.png"
+                        <a href="<%= host %>/site/member/img/books/khobangkub.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j1.png"
                                         alt="" class="img-fluid"></a>
 
                 </div>
                 <div class="col">
 
-                        <a href="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/books/chumrabunchi.pdf"
-                                target="_blank"><img src="https://www.สหกรณ์จังหวัดชัยภูมิ.com/site/member/img/j5.png"
+                        <a href="<%= host %>/site/member/img/books/lerk.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j2.png"
+                                        alt="" class="img-fluid"></a>
+
+                </div>
+                <div class="col">
+
+                        <a href="<%= host %>/site/member/img/books/chumrabunchi.pdf"
+                                target="_blank"><img src="<%= host %>/site/member/img/j5.png"
                                         alt="" class="img-fluid"></a>
 
                 </div>
@@ -69,7 +70,7 @@
         <ul class="list-group">
         <% data.forEach(item => {
         %>
-        <a href="https://xn--12cmcj6bi9fihe1c4anf2gdc1d7e2r.com/site/img/download/<%=item.down_file %>" id="a_down" class="text-decoration-none" target="_blank"><li class="list-group-item list-group-item-action list-group-item-success "><%= item.down_subject %> </li></a>
+        <a href="<%= host %>/<%=item.down_file %>" id="a_down" class="text-decoration-none" target="_blank"><li class="list-group-item list-group-item-action list-group-item-success "><%= item.down_subject %> </li></a>
         <%
         })
 
