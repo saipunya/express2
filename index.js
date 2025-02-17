@@ -12,6 +12,7 @@ const registerRoutes = require('./Routes/registerRoute')
 const dashboardRoutes = require('./Routes/dashboardRoute')
 const logoutRoutes = require('./Routes/logoutRoute')
 const homeRoutes = require('./Routes/homeRoute')
+const ruleRoutes = require('./Routes/ruleRoute')
 
 
 app.use(express.static(__dirname + '/public'));
@@ -38,6 +39,8 @@ app.use('/',registerRoutes)
 app.use('/',dashboardRoutes)
 app.use('/',logoutRoutes)
 app.use('/',homeRoutes)
+app.use('/',ruleRoutes)
+
 app.listen(port,()=>{
     console.log('object listening on port 3000');
 })

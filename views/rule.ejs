@@ -1,0 +1,33 @@
+<%- include('header') %>
+
+<form action="/rule" method="get">
+    <div class="container">
+        <h2 class="text-center bg-yellow-600">ค้นหากฎหมายสหกรณ์</h2>
+        <div class="row my-2">
+            <div class="col-md-3 text-md-end text-start">ค้นหา:</div>
+            <div class="col-md-9"><input type="text" name="keyword" id="" class="form-control" placeholder="ระบุข้อความค้นหา"></div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <input type="submit" value="ค้นหา" class="btn btn-sm btn-success">
+            </div>
+        </div>
+    </div>
+</form>
+
+<% if(locals.data){ %>
+    <div class="container">
+        <table class="table table-bordered">
+            <% data.forEach(item => {
+                let detail = item.law_detail;
+                let newStr = detail.replace(/\/\//g, "<br/>");  // แทนที่ // ด้วย <br/>
+            %>
+            <tr>
+                <td><%= item.law_number %> <b><%= item.law_part %></b><br/><%- newStr %></td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+<% } %>
+
+<%- include('footer') %>
